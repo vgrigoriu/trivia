@@ -21,10 +21,18 @@ namespace Trivia.EndToEndTests
 
             var result = builder.ToString();
 
-            result.Should().Be(expectedOutput);
+            var resultLines = result.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+            var expectedLines = expectedOutput.Split(new[] {Environment.NewLine}, StringSplitOptions.None);
+
+            resultLines.Length.Should().Be(expectedLines.Length);
+
+            foreach (var pair in expectedLines.Zip(resultLines, (expectedLine, resultLine) => new {expectedLine, resultLine}))
+            {
+                pair.resultLine.Should().Be(pair.expectedLine);
+            }
         }
 
-        private string expectedOutput = @"Chet was added
+        private const string expectedOutput = @"Chet was added
 They are player number 1
 Pat was added
 They are player number 2
