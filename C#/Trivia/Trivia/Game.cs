@@ -162,15 +162,13 @@ namespace UglyTrivia
                             + " Gold Coins.");
 
                     bool winner = didPlayerWin();
-                    currentPlayer++;
-                    if (currentPlayer == players.Count) currentPlayer = 0;
+                    GoToNextPlayer();
 
                     return winner;
                 }
                 else
                 {
-                    currentPlayer++;
-                    if (currentPlayer == players.Count) currentPlayer = 0;
+                    GoToNextPlayer();
                     return true;
                 }
 
@@ -188,11 +186,16 @@ namespace UglyTrivia
                         + " Gold Coins.");
 
                 bool winner = didPlayerWin();
-                currentPlayer++;
-                if (currentPlayer == players.Count) currentPlayer = 0;
+                GoToNextPlayer();
 
                 return winner;
             }
+        }
+
+        private void GoToNextPlayer()
+        {
+            currentPlayer++;
+            if (currentPlayer == players.Count) currentPlayer = 0;
         }
 
         public bool wrongAnswer()
@@ -201,8 +204,7 @@ namespace UglyTrivia
             writer.WriteLine(players[currentPlayer].Name + " was sent to the penalty box");
             players[currentPlayer].IsInPenaltyBox = true;
 
-            currentPlayer++;
-            if (currentPlayer == players.Count) currentPlayer = 0;
+            GoToNextPlayer();
             return true;
         }
 
