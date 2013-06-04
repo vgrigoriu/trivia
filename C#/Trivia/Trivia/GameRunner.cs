@@ -28,6 +28,8 @@ namespace Trivia
             aGame.add("Pat");
             aGame.add("Sue");
 
+            aGame.StartGame();
+
             Random rand = new Random(seed);
 
             do
