@@ -33,7 +33,7 @@ namespace UglyTrivia
 
             for (int i = 0; i < 50; i++)
             {
-                popQuestions.AddLast("Poop Question " + i);
+                popQuestions.AddLast("Pop Question " + i);
                 scienceQuestions.AddLast(("Science Question " + i));
                 sportsQuestions.AddLast(("Sports Question " + i));
                 rockQuestions.AddLast(createRockQuestion(i));
