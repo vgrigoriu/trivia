@@ -27,11 +27,26 @@ namespace UglyTrivia
 
             for (int i = 0; i < 50; i++)
             {
-                popQuestions.AddLast("Pop Question " + i);
-                scienceQuestions.AddLast(("Science Question " + i));
-                sportsQuestions.AddLast(("Sports Question " + i));
+                popQuestions.AddLast(createPopQuestion(i));
+                scienceQuestions.AddLast(createScienceQuestion(i));
+                sportsQuestions.AddLast(createSportsQuestion(i));
                 rockQuestions.AddLast(createRockQuestion(i));
             }
+        }
+
+        private static string createSportsQuestion(int i)
+        {
+            return "Sports Question " + i;
+        }
+
+        private static string createScienceQuestion(int i)
+        {
+            return "Science Question " + i;
+        }
+
+        private static string createPopQuestion(int i)
+        {
+            return "Pop Question " + i;
         }
 
         public String createRockQuestion(int index)
