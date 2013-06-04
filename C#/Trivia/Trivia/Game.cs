@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Xml.Schema;
 using Trivia;
 
 namespace UglyTrivia
@@ -11,10 +12,10 @@ namespace UglyTrivia
     {
         List<Player> players = new List<Player>();
 
-        LinkedList<string> popQuestions = new LinkedList<string>();
-        LinkedList<string> scienceQuestions = new LinkedList<string>();
-        LinkedList<string> sportsQuestions = new LinkedList<string>();
-        LinkedList<string> rockQuestions = new LinkedList<string>();
+        QuestionCategory popCategory = new QuestionCategory("Pop");
+        QuestionCategory scienceCategory = new QuestionCategory("Science");
+        QuestionCategory rockCategory = new QuestionCategory("Rock");
+        QuestionCategory sportsCategory = new QuestionCategory("Sports");
 
         int currentPlayer = 0;
         bool isGettingOutOfPenaltyBox;
@@ -25,13 +26,10 @@ namespace UglyTrivia
         {
             this.writer = writer;
 
-            for (int i = 0; i < 50; i++)
-            {
-                popQuestions.AddLast(createPopQuestion(i));
-                scienceQuestions.AddLast(createScienceQuestion(i));
-                sportsQuestions.AddLast(createSportsQuestion(i));
-                rockQuestions.AddLast(createRockQuestion(i));
-            }
+            popCategory.CreateQuestions();
+            scienceCategory.CreateQuestions();
+            rockCategory.CreateQuestions();
+            sportsCategory.CreateQuestions();
         }
 
         private static string createSportsQuestion(int i)
@@ -105,7 +103,7 @@ namespace UglyTrivia
             else
             {
 
-               AdvancePlayer(roll);
+                AdvancePlayer(roll);
 
                 writer.WriteLine(players[currentPlayer].Name
                         + "'s new location is "
@@ -128,23 +126,19 @@ namespace UglyTrivia
         {
             if (currentCategory() == "Pop")
             {
-                writer.WriteLine(popQuestions.First());
-                popQuestions.RemoveFirst();
+                writer.WriteLine(popCategory.GetNextQuestion());
             }
             if (currentCategory() == "Science")
             {
-                writer.WriteLine(scienceQuestions.First());
-                scienceQuestions.RemoveFirst();
+                writer.WriteLine(scienceCategory.GetNextQuestion());
             }
             if (currentCategory() == "Sports")
             {
-                writer.WriteLine(sportsQuestions.First());
-                sportsQuestions.RemoveFirst();
+                writer.WriteLine(sportsCategory.GetNextQuestion());
             }
             if (currentCategory() == "Rock")
             {
-                writer.WriteLine(rockQuestions.First());
-                rockQuestions.RemoveFirst();
+                writer.WriteLine(rockCategory.GetNextQuestion());
             }
         }
 
