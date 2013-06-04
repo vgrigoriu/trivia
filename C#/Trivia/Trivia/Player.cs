@@ -9,16 +9,20 @@ namespace Trivia
     {
         public string Name { get; private set; }
         public int Purse { get; private set; }
+        public bool IsInPenaltyBox { get; set; }
 
         public Player(string name)
         {
             Name = name;
             Purse = 0;
+            IsInPenaltyBox = false;
         }
 
         public void AddToPurse(int amount)
         {
             Purse += amount;
         }
+
+
     }
 }
