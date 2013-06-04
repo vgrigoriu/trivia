@@ -11,8 +11,6 @@ namespace UglyTrivia
     {
         List<Player> players = new List<Player>();
 
-        int[] places = new int[6];
-
         LinkedList<string> popQuestions = new LinkedList<string>();
         LinkedList<string> scienceQuestions = new LinkedList<string>();
         LinkedList<string> sportsQuestions = new LinkedList<string>();
@@ -52,8 +50,6 @@ namespace UglyTrivia
 
             players.Add(newPlayer);
 
-            places[howManyPlayers()] = 0;
-
             writer.WriteLine(playerName + " was added");
             writer.WriteLine("They are player number " + players.Count);
             return true;
@@ -76,12 +72,11 @@ namespace UglyTrivia
                     isGettingOutOfPenaltyBox = true;
 
                     writer.WriteLine(players[currentPlayer].Name + " is getting out of the penalty box");
-                    places[currentPlayer] = places[currentPlayer] + roll;
-                    if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+                    AdvancePlayer(roll);
 
                     writer.WriteLine(players[currentPlayer].Name
                             + "'s new location is "
-                            + places[currentPlayer]);
+                            + players[currentPlayer].Place);
                     writer.WriteLine("The category is " + currentCategory());
                     askQuestion();
                 }
@@ -95,16 +90,23 @@ namespace UglyTrivia
             else
             {
 
-                places[currentPlayer] = places[currentPlayer] + roll;
-                if (places[currentPlayer] > 11) places[currentPlayer] = places[currentPlayer] - 12;
+               AdvancePlayer(roll);
 
                 writer.WriteLine(players[currentPlayer].Name
                         + "'s new location is "
-                        + places[currentPlayer]);
+                        + players[currentPlayer].Place);
                 writer.WriteLine("The category is " + currentCategory());
                 askQuestion();
             }
 
+        }
+
+        private void AdvancePlayer(int steps)
+        {
+            players[currentPlayer].Place += steps;
+
+            if (players[currentPlayer].Place > 11)
+                players[currentPlayer].Place -= 12;
         }
 
         private void askQuestion()
@@ -134,15 +136,15 @@ namespace UglyTrivia
 
         private String currentCategory()
         {
-            if (places[currentPlayer] == 0) return "Pop";
-            if (places[currentPlayer] == 4) return "Pop";
-            if (places[currentPlayer] == 8) return "Pop";
-            if (places[currentPlayer] == 1) return "Science";
-            if (places[currentPlayer] == 5) return "Science";
-            if (places[currentPlayer] == 9) return "Science";
-            if (places[currentPlayer] == 2) return "Sports";
-            if (places[currentPlayer] == 6) return "Sports";
-            if (places[currentPlayer] == 10) return "Sports";
+            if (players[currentPlayer].Place == 0) return "Pop";
+            if (players[currentPlayer].Place == 4) return "Pop";
+            if (players[currentPlayer].Place == 8) return "Pop";
+            if (players[currentPlayer].Place == 1) return "Science";
+            if (players[currentPlayer].Place == 5) return "Science";
+            if (players[currentPlayer].Place == 9) return "Science";
+            if (players[currentPlayer].Place == 2) return "Sports";
+            if (players[currentPlayer].Place == 6) return "Sports";
+            if (players[currentPlayer].Place == 10) return "Sports";
             return "Rock";
         }
 
